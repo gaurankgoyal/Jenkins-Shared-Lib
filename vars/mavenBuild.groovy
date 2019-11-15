@@ -5,10 +5,12 @@ def call(body) {
     body()
     stage 'checkout'
     node {
-        checkout scm
+	stage('Pull Source Code') {
+        	checkout scm
+	}
         stage 'Build'
         docker.image(config.environment).inside {
-            sh config.mainScript
+        	sh config.mainScript
         }
         stage 'UnitTest'
         sh config.postScript
