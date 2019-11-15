@@ -5,7 +5,7 @@ def call(body) {
     body()
 	
     pomFile = config.get("pomFile", "pom.xml")
-    commonFun.setJobProperties(env.NUM_BUILDS_KEPT, "H/30 * * * *")
+    commonFun.setJobProperties(env.NUM_BUILDS_KEPT, "H/10 * * * *")
     stage 'checkout'
     node {
 	stage('Pull Source Code') {
