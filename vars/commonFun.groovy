@@ -1,3 +1,8 @@
+String artifactoryServerUrl() {
+    return 'http://0.0.0.0:8081/'
+}
+
+
 def setJobProperties(numToKeep, pollSCMSchedule) {
     def jobProperties = []
     jobProperties.add(disableConcurrentBuilds())
