@@ -1,15 +1,16 @@
-def call(Map config) {
+def call(body) {
+    def config = [:]
+    body.resolveStrategy = Closure.DELEGATE_FIRST
+    body.delegate = config
+    body()
+    stage 'checkout'
     node {
-        stage('Checkout') {
-            checkout scm
+        checkout scm
+        stage 'main'
+        docker.image(config.environment).inside {
+            sh config.mainScript
         }
-        stage('Main') {
-            docker.image(config.environment).inside {
-                sh config.mainScript
-            }
-        }
-        stage('Post') {
-            sh config.postScript
-        }
+        stage 'post'
+        sh config.postScript
     }
 }
