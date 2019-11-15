@@ -6,11 +6,11 @@ def call(body) {
     stage 'checkout'
     node {
         checkout scm
-        stage 'main'
+        stage 'Build'
         docker.image(config.environment).inside {
             sh config.mainScript
         }
-        stage 'post'
+        stage 'UnitTest'
         sh config.postScript
     }
 }
