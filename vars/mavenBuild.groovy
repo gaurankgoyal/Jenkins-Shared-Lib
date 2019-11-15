@@ -3,6 +3,8 @@ def call(body) {
     body.resolveStrategy = Closure.DELEGATE_FIRST
     body.delegate = config
     body()
+	
+    pomFile = config.get("pomFile", "pom.xml")
     stage 'checkout'
     node {
 	stage('Pull Source Code') {
