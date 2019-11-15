@@ -7,7 +7,10 @@ def call(body) {
     node {
 	stage('Pull Source Code') {
         	checkout scm
+
 	}
+	pomVersion = readMavenPom().getVersion()
+        println(pomVersion)
         stage 'Build'
         docker.image(config.environment).inside {
         	sh config.mainScript
