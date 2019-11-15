@@ -12,10 +12,8 @@ def call(body) {
         	checkout scm
 
 	}
-	pom = readMavenPom file: 'pom.xml'
-	pom.version
-	//pomVersion = readMavenPom().getVersion()
-        println(pom.version)
+	pomVersion = readMavenPom().getVersion()
+	println(pomVersion)
         stage 'Build'
         docker.image(config.environment).inside {
         	sh config.mainScript
