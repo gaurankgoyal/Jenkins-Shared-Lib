@@ -8,10 +8,10 @@ def call(body) {
     commonFun.setJobProperties(env.NUM_BUILDS_KEPT, "H/10 * * * *")
     SERVER_URL = commonFun.artifactoryServerUrl()
     CREDENTIALS = "atrifactory"
-    //artifactoryServer = Artifactory.newServer url: SERVER_URL, credentialsId: CREDENTIALS
+    artifactoryServer = Artifactory.newServer url: SERVER_URL, credentialsId: CREDENTIALS
 
-    //rtMaven = Artifactory.newMavenBuild()
-    //rtMaven.tool = mavenTool
+    rtMaven = Artifactory.newMavenBuild()
+    rtMaven.tool = mavenTool
     print (SERVER_URL) 
     print (CREDENTIALS)
     stage 'checkout'
