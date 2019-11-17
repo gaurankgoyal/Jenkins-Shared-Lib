@@ -7,7 +7,7 @@ def call(body) {
     pomFile = config.get("pomFile", "pom.xml")
     commonFun.setJobProperties(env.NUM_BUILDS_KEPT, "H/10 * * * *")
     SERVER_URL = commonFun.artifactoryServerUrl()
-    CREDENTIALS = artifcatory-credential
+    CREDENTIALS = atrifactory
     artifactoryServer = Artifactory.newServer url: SERVER_URL, credentialsId: CREDENTIALS
 
     rtMaven = Artifactory.newMavenBuild()
