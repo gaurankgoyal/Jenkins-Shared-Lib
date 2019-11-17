@@ -10,7 +10,8 @@ def call(body) {
     CREDENTIALS = "atrifactory"
     artifactoryServer = Artifactory.newServer url: SERVER_URL, credentialsId: CREDENTIALS
     print (artifactoryServer)
-   // rtMaven = Artifactory.newMavenBuild()
+    rtMaven = Artifactory.newMavenBuild()
+    print (rtMaven)
    // rtMaven.tool = mavenTool
     print (SERVER_URL) 
     print (CREDENTIALS)
