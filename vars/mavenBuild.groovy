@@ -9,9 +9,9 @@ def call(body) {
     SERVER_URL = commonFun.artifactoryServerUrl()
     CREDENTIALS = "atrifactory"
     artifactoryServer = Artifactory.newServer url: SERVER_URL, credentialsId: CREDENTIALS
-
-    rtMaven = Artifactory.newMavenBuild()
-    rtMaven.tool = mavenTool
+    print (artifactoryServer)
+   // rtMaven = Artifactory.newMavenBuild()
+   // rtMaven.tool = mavenTool
     print (SERVER_URL) 
     print (CREDENTIALS)
     stage 'checkout'
