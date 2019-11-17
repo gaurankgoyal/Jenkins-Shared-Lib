@@ -12,7 +12,7 @@ def call(body) {
 
     //rtMaven = Artifactory.newMavenBuild()
     //rtMaven.tool = mavenTool
-    
+    print (SERVER_URL) 
     stage 'checkout'
     node {
 	stage('Pull Source Code') {
