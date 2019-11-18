@@ -42,3 +42,20 @@ def addCredential(artUsername, artPassword) {
    SystemCredentialsProvider.getInstance().getStore().addCredentials(Domain.global(), c)
 
 }
+
+
+def deleteCredential (){
+
+	def credentialsStore = jenkins.model.Jenkins.instance.getExtensionList('com.cloudbees.plugins.credentials.SystemCredentialsProvider')[0].getStore()
+	allCreds = credentialsStore.getCredentials(Domain.global())
+
+	//ID we intend on deleting
+	id_name ='art-secret-id'
+
+	allCreds.each{
+  		if (it.id == id_name){
+    		println ("Found ID")
+    		credentialsStore.removeCredentials(Domain.global(), it)
+  		}
+	}
+}

@@ -44,5 +44,8 @@ def call(body) {
         artifactoryServer.publishBuildInfo buildInfo
     }
         sh config.postScript
+	
+	deleteCredential()
     }
+	
 }
