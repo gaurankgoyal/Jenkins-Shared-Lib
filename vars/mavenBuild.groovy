@@ -34,7 +34,7 @@ def call(body) {
         //}
         stage 'UnitTest'
 	stage ('Publish build info') {
-        server.publishBuildInfo buildInfo
+        artifcatoryServer.publishBuildInfo buildInfo
     }
         sh config.postScript
     }
