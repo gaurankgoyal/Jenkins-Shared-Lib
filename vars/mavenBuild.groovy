@@ -1,4 +1,4 @@
-import com.infosys.jenkins-add-username-with-password-cred
+import com.infosys.JenkinsAddUsernameWithPasswordCred
 
 def call(body) {
     def config = [:]
