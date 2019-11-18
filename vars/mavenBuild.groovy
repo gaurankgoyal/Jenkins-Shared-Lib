@@ -22,15 +22,20 @@ def call(body) {
         	checkout scm
 
 	}
+	rtMaven.deployer releaseRepo: 'libs-release-local', snapshotRepo: 'libs-snapshot-local', server: server
+        rtMaven.resolver releaseRepo: 'libs-release', snapshotRepo: 'libs-snapshot', server: server
+        buildInfo = Artifactory.newBuildInfo()
 	pomVersion = readMavenPom().getVersion()
 	println(pomVersion)
         stage 'Build'
         docker.image(config.environment).inside {
-        	sh config.mainScript
+        	//sh config.mainScrit
+		rtMaven.run pom: 'pom.xml', goals: 'clean install', buildInfo: buildInfo
         }
-	rtMaven.resolver server: artifactoryServer, releaseRepo: 'global-maven', snapshotRepo: 'global-maven'
-	rtMaven.deployer server: artifactoryServer, releaseRepo: 'example-repo-local', snapshotRepo: 'snapshotRepo'
         stage 'UnitTest'
+	stage ('Publish build info') {
+        server.publishBuildInfo buildInfo
+    }
         sh config.postScript
     }
 }
