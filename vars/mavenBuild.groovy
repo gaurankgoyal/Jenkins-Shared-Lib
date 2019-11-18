@@ -13,7 +13,6 @@ def call(body) {
     def rtMaven = Artifactory.newMavenBuild()
     def buildInfo
     print (SERVER_URL) 
-    print (CREDENTIALS)
 
     stage 'checkout'
     node {
