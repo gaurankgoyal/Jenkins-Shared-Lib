@@ -1,3 +1,5 @@
+import com.infosys.jenkins-add-username-with-password-cred
+
 def call(body) {
     def config = [:]
     body.resolveStrategy = Closure.DELEGATE_FIRST
