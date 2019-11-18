@@ -1,3 +1,8 @@
+import com.cloudbees.plugins.credentials.*
+import com.cloudbees.plugins.credentials.domains.Domain
+import com.cloudbees.plugins.credentials.impl.*
+import hudson.util.Secret
+import jenkins.model.Jenkins
 
 def call(body) {
     def config = [:]
@@ -19,12 +24,6 @@ def call(body) {
     print (SERVER_URL) 
     print (CREDENTIALS)
 
-
-import com.cloudbees.plugins.credentials.*
-import com.cloudbees.plugins.credentials.domains.Domain
-import com.cloudbees.plugins.credentials.impl.*
-import hudson.util.Secret
-import jenkins.model.Jenkins
 
 // parameters
 def jenkinsKeyUsernameWithPasswordParameters = [
