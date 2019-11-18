@@ -46,7 +46,7 @@ def call(body) {
     }
         sh config.postScript
 
-	commonFun.deleteCredential()	
+	commonFun.deleteCredential(secretId)	
     }
 	
 }
