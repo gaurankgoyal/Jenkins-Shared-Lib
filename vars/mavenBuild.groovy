@@ -12,7 +12,7 @@ def call(body) {
     print (artifactoryServer)
     rtMaven = Artifactory.newMavenBuild()
     print (rtMaven)
-   // rtMaven.tool = mavenTool
+    rtMaven.tool = mavenTool
     print (SERVER_URL) 
     print (CREDENTIALS)
     stage 'checkout'
