@@ -1,9 +1,3 @@
-//import com.cloudbees.plugins.credentials.*
-//import com.cloudbees.plugins.credentials.domains.Domain
-//import com.cloudbees.plugins.credentials.impl.*
-//import hudson.util.Secret
-//import jenkins.model.Jenkins
-
 def call(body) {
     def config = [:]
     body.resolveStrategy = Closure.DELEGATE_FIRST
@@ -16,35 +10,18 @@ def call(body) {
     def SERVER_URL = commonFun.artifactoryServerUrl()
     def CREDENTIALS = "atrifactory"
     def artifactoryServer = Artifactory.newServer url: SERVER_URL, credentialsId: CREDENTIALS
-    //print (artifactoryServer)
     def rtMaven = Artifactory.newMavenBuild()
-    //print (rtMaven)
     def buildInfo
-    //rtMaven.tool = mavenTool
     print (SERVER_URL) 
     print (CREDENTIALS)
-
-//    withVault(configuration: [timeout: 60, vaultCredentialId: 'vault-token', vaultUrl: 'http://e746f51dee0e:8200'], vaultSecrets: [[path: 'secret/testing', secretValues: [[envVar: 'test_one', vaultKey: 'value_one']]]])
-//print (test_one)
-// parameters
-
-//Credentials c = (Credentials) new UsernamePasswordCredentialsImpl(
-//CredentialsScope.GLOBAL, // Scope
-//"my-id", // id
-//"My description", // description
-//"my-username", // username
-//"password" // password
-//)
-//SystemCredentialsProvider.getInstance().getStore().addCredentials(Domain.global(), c)
-
-
 
     stage 'checkout'
     node {
 	stage('Get Secret From Vault'){
-	withVault(configuration: [timeout: 60, vaultCredentialId: 'vault-token', vaultUrl: 'http://e746f51dee0e:8200'], vaultSecrets: [[path: 'secret/testing', secretValues: [[envVar: 'test_one', vaultKey: 'value_one']]]])
+		withVault(configuration: [timeout: 60, vaultCredentialId: 'vault-token', vaultUrl: 'http://e746f51dee0e:8200'], vaultSecrets: [[path: 'secret/Artifactory', secretValues: [[envVar: 'artUsername', vaultKey: 'username'], [envVar: 'artPassword', vaultKey: 'password']]]])
 		{
-		print (test_one)
+		print (artUsername)
+		print (artPassword)
 		commonFun.addCredential()
 		}
 	}
