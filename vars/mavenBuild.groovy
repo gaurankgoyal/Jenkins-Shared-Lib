@@ -8,7 +8,8 @@ def call(body) {
     def pomFile = config.get("pomFile", "pom.xml")
     commonFun.setJobProperties(env.NUM_BUILDS_KEPT, "H/10 * * * *")
     def SERVER_URL = commonFun.artifactoryServerUrl()
-    def artifactoryServer = Artifactory.newServer url: SERVER_URL, credentialsId: 'art-secret-id'
+    def secretId = 'art-secret-id'
+    def artifactoryServer = Artifactory.newServer url: SERVER_URL, credentialsId: secretId
     def rtMaven = Artifactory.newMavenBuild()
     def buildInfo
     print (SERVER_URL) 
@@ -16,12 +17,12 @@ def call(body) {
 
     stage 'checkout'
     node {
+	
 	stage('Get Secret From Vault'){
 		withVault(configuration: [timeout: 60, vaultCredentialId: 'vault-token', vaultUrl: 'http://vault:8200'], vaultSecrets: [[path: 'secret/Artifactory', secretValues: [[envVar: 'artUsername', vaultKey: 'username'], [envVar: 'artPassword', vaultKey: 'password']]]])
 		{
-		print (artUsername)
-		print (artPassword)
-		commonFun.addCredential(artUsername, artPassword)
+		def description = 'Jfrog-Credentials'
+		commonFun.addCredential(artUsername, artPassword, secretId, description)
 		}
 	}
 	stage('Pull Source Code') {
