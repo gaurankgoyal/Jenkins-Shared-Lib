@@ -39,9 +39,7 @@ def call(body) {
 	}
         stage (Build) {
 		rtMaven.run pom: 'pom.xml', goals: 'clean install', buildInfo: buildInfo
-	}
-	finally {
-        junit allowEmptyResults: true, testResults: '**/surefire-reports/*.xml'
+        	junit allowEmptyResults: true, testResults: '**/surefire-reports/*.xml'
     	}
         stage 'UnitTest'
 	stage ('Publish build info') {
