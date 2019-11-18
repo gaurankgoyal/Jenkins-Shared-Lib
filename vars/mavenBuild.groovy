@@ -1,7 +1,7 @@
-import com.cloudbees.plugins.credentials.*
-import com.cloudbees.plugins.credentials.domains.Domain
-import com.cloudbees.plugins.credentials.impl.*
-import hudson.util.Secret
+//import com.cloudbees.plugins.credentials.*
+//import com.cloudbees.plugins.credentials.domains.Domain
+//import com.cloudbees.plugins.credentials.impl.*
+//import hudson.util.Secret
 //import jenkins.model.Jenkins
 
 def call(body) {
@@ -24,23 +24,29 @@ def call(body) {
     print (SERVER_URL) 
     print (CREDENTIALS)
 
-    withVault(configuration: [timeout: 60, vaultCredentialId: 'vault-token', vaultUrl: 'http://e746f51dee0e:8200'], vaultSecrets: [[path: 'secret/testing', secretValues: [[envVar: 'test_one', vaultKey: 'value_one']]]])
+//    withVault(configuration: [timeout: 60, vaultCredentialId: 'vault-token', vaultUrl: 'http://e746f51dee0e:8200'], vaultSecrets: [[path: 'secret/testing', secretValues: [[envVar: 'test_one', vaultKey: 'value_one']]]])
 print (test_one)
 // parameters
 
-Credentials c = (Credentials) new UsernamePasswordCredentialsImpl(
-CredentialsScope.GLOBAL, // Scope
-"my-id", // id
-"My description", // description
-"my-username", // username
-"password" // password
-)
-SystemCredentialsProvider.getInstance().getStore().addCredentials(Domain.global(), c)
+//Credentials c = (Credentials) new UsernamePasswordCredentialsImpl(
+//CredentialsScope.GLOBAL, // Scope
+//"my-id", // id
+//"My description", // description
+//"my-username", // username
+//"password" // password
+//)
+//SystemCredentialsProvider.getInstance().getStore().addCredentials(Domain.global(), c)
 
 
 
     stage 'checkout'
     node {
+	stage('Get Secret From Vault'){
+	withVault(configuration: [timeout: 60, vaultCredentialId: 'vault-token', vaultUrl: 'http://e746f51dee0e:8200'], vaultSecrets: [[path: 'secret/testing', secretValues: [[envVar: 'test_one', vaultKey: 'value_one']]]])
+	print (test_one)
+	commonFun.addCredential()
+	}
+	
 	stage('Pull Source Code') {
         	checkout scm
 

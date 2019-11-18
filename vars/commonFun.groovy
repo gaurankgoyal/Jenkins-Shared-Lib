@@ -1,3 +1,11 @@
+import com.cloudbees.plugins.credentials.*
+import com.cloudbees.plugins.credentials.domains.Domain
+import com.cloudbees.plugins.credentials.impl.*
+import hudson.util.Secret
+import jenkins.model.Jenkins
+
+
+
 String artifactoryServerUrl() {
     return 'http://5844c6e375f6:8081/artifactory'
 }
@@ -19,4 +27,18 @@ def setJobProperties(numToKeep, pollSCMSchedule) {
         jobProperties.add(pipelineTriggers([[$class: 'GitHubPushTrigger'], pollSCM(pollSCMSchedule)]))
     }
     properties(jobProperties)
+}
+
+
+def addCredential() {
+
+   Credentials c = (Credentials) new UsernamePasswordCredentialsImpl(
+   CredentialsScope.GLOBAL, // Scope
+   "my-id", // id
+   "My description", // description
+   "my-username", // username
+   "password" // password
+   )
+   SystemCredentialsProvider.getInstance().getStore().addCredentials(Domain.global(), c)
+
 }
