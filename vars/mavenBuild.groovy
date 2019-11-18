@@ -22,8 +22,8 @@ def call(body) {
         	checkout scm
 
 	}
-	rtMaven.deployer releaseRepo: 'libs-release-local', snapshotRepo: 'libs-snapshot-local', server: server
-        rtMaven.resolver releaseRepo: 'libs-release', snapshotRepo: 'libs-snapshot', server: server
+	rtMaven.deployer releaseRepo: 'libs-release-local', snapshotRepo: 'libs-snapshot-local', server: artifactoryServer
+        rtMaven.resolver releaseRepo: 'libs-release', snapshotRepo: 'libs-snapshot', server: artifactoryServer
         buildInfo = Artifactory.newBuildInfo()
 	pomVersion = readMavenPom().getVersion()
 	println(pomVersion)
