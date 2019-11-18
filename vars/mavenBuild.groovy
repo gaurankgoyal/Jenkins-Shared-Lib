@@ -4,11 +4,11 @@ def call(body) {
     body.delegate = config
     body()
 	
-    mavenTool = "M3"
-    pomFile = config.get("pomFile", "pom.xml")
+    def mavenTool = "M3"
+    def pomFile = config.get("pomFile", "pom.xml")
     commonFun.setJobProperties(env.NUM_BUILDS_KEPT, "H/10 * * * *")
-    SERVER_URL = commonFun.artifactoryServerUrl()
-    CREDENTIALS = "atrifactory"
+    def SERVER_URL = commonFun.artifactoryServerUrl()
+    def CREDENTIALS = "atrifactory"
     def artifactoryServer = Artifactory.newServer url: SERVER_URL, credentialsId: CREDENTIALS
     //print (artifactoryServer)
     def rtMaven = Artifactory.newMavenBuild()
@@ -17,6 +17,21 @@ def call(body) {
     //rtMaven.tool = mavenTool
     print (SERVER_URL) 
     print (CREDENTIALS)
+
+
+    Jenkins jenkins = Jenkins.getInstance()
+    def domain = Domain.global()
+    def store = jenkins.getExtensionList('com.cloudbees.plugins.credentials.SystemCredentialsProvider')[0].getStore()
+    def jenkinsKeyUsernameWithPassword = new UsernamePasswordCredentialsImpl(
+      CredentialsScope.GLOBAL,
+      jenkinsKeyUsernameWithPasswordParameters.id,
+      jenkinsKeyUsernameWithPasswordParameters.description,
+      jenkinsKeyUsernameWithPasswordParameters.userName,
+      jenkinsKeyUsernameWithPasswordParameters.secret
+   )
+   store.addCredentials(domain, jenkinsKeyUsernameWithPassword)
+   jenkins.save()    
+
     stage 'checkout'
     node {
 	stage('Pull Source Code') {
