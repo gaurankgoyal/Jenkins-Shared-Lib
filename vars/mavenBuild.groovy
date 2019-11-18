@@ -8,7 +8,6 @@ def call(body) {
     def pomFile = config.get("pomFile", "pom.xml")
     commonFun.setJobProperties(env.NUM_BUILDS_KEPT, "H/10 * * * *")
     def SERVER_URL = commonFun.artifactoryServerUrl()
-    def CREDENTIALS = "atrifactory"
     def artifactoryServer = Artifactory.newServer url: SERVER_URL, credentialsId: 'art-secret-id'
     def rtMaven = Artifactory.newMavenBuild()
     def buildInfo
@@ -18,7 +17,7 @@ def call(body) {
     stage 'checkout'
     node {
 	stage('Get Secret From Vault'){
-		withVault(configuration: [timeout: 60, vaultCredentialId: 'vault-token', vaultUrl: 'http://e746f51dee0e:8200'], vaultSecrets: [[path: 'secret/Artifactory', secretValues: [[envVar: 'artUsername', vaultKey: 'username'], [envVar: 'artPassword', vaultKey: 'password']]]])
+		withVault(configuration: [timeout: 60, vaultCredentialId: 'vault-token', vaultUrl: 'http://vault:8200'], vaultSecrets: [[path: 'secret/Artifactory', secretValues: [[envVar: 'artUsername', vaultKey: 'username'], [envVar: 'artPassword', vaultKey: 'password']]]])
 		{
 		print (artUsername)
 		print (artPassword)

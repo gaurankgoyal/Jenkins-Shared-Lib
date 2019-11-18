@@ -7,7 +7,7 @@ import jenkins.model.Jenkins
 
 
 String artifactoryServerUrl() {
-    return 'http://5844c6e375f6:8081/artifactory'
+    return 'http://artifactory:8081/artifactory'
 }
 
 
