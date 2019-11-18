@@ -46,10 +46,7 @@ def call(body) {
 	{
 		withCredentials([string(credentialsId: 'sonar-login', variable: 'SONAR_LOGIN')]) {
 		echo "Running SonarQube Static Analysis for master"
-		withMaven(maven:'Maven 3.5')
-		{
-                	sh "mvn -e -B sonar:sonar -Dsonar.host.url=http://sonarqube:9000/ -Dsonar.login= -Dsonar.projectVersion=${pomVersion} "
-                }
+                sh "mvn -e -B sonar:sonar -Dsonar.host.url=http://sonarqube:9000/ -Dsonar.login= -Dsonar.projectVersion=${pomVersion} "
 		echo "SonarQube Static Analysis was SUCCESSFUL for master"
 		}
 	}
