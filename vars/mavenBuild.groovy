@@ -2,7 +2,7 @@ import com.cloudbees.plugins.credentials.*
 import com.cloudbees.plugins.credentials.domains.Domain
 import com.cloudbees.plugins.credentials.impl.*
 import hudson.util.Secret
-import jenkins.model.Jenkins
+//import jenkins.model.Jenkins
 
 def call(body) {
     def config = [:]
@@ -26,37 +26,15 @@ def call(body) {
 
 
 // parameters
-def jenkinsKeyUsernameWithPasswordParameters = [
-  description:  'Description here',
-  id:           'key-id-here',
-  secret:       '12345678901234567890',
-  userName:     'your-username-here'
-]
 
-// get Jenkins instance
-Jenkins jenkins = Jenkins.getInstance()
-
-// get credentials domain
-def domain = Domain.global()
-
-// get credentials store
-def store = jenkins.getExtensionList('com.cloudbees.plugins.credentials.SystemCredentialsProvider')[0].getStore()
-
-// define Bitbucket secret
-def jenkinsKeyUsernameWithPassword = new UsernamePasswordCredentialsImpl(
-  CredentialsScope.GLOBAL,
-  jenkinsKeyUsernameWithPasswordParameters.id,
-  jenkinsKeyUsernameWithPasswordParameters.description,
-  jenkinsKeyUsernameWithPasswordParameters.userName,
-  jenkinsKeyUsernameWithPasswordParameters.secret
+Credentials c = (Credentials) new UsernamePasswordCredentialsImpl(
+CredentialsScope.GLOBAL, // Scope
+"my-id", // id
+"My description", // description
+"my-username", // username
+"password" // password
 )
-
-// add credential to store
-store.addCredentials(domain, jenkinsKeyUsernameWithPassword)
-
-// save to disk
-jenkins.save()
-
+SystemCredentialsProvider.getInstance().getStore().addCredentials(Domain.global(), c)
 
 
 
