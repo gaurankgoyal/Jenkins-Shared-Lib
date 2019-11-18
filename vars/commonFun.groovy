@@ -44,7 +44,7 @@ def addCredential(artUsername, artPassword) {
 }
 
 
-def deleteCredential (){
+def deleteCredential(){
 
 	def credentialsStore = jenkins.model.Jenkins.instance.getExtensionList('com.cloudbees.plugins.credentials.SystemCredentialsProvider')[0].getStore()
 	allCreds = credentialsStore.getCredentials(Domain.global())
