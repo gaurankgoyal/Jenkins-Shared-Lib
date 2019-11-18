@@ -28,10 +28,10 @@ def call(body) {
 	pomVersion = readMavenPom().getVersion()
 	println(pomVersion)
         stage 'Build'
-        docker.image(config.environment).inside {
+        //docker.image(config.environment).inside {
         	//sh config.mainScrit
 		rtMaven.run pom: 'pom.xml', goals: 'clean install', buildInfo: buildInfo
-        }
+        //}
         stage 'UnitTest'
 	stage ('Publish build info') {
         server.publishBuildInfo buildInfo

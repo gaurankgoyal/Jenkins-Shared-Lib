@@ -1,5 +1,5 @@
 String artifactoryServerUrl() {
-    return 'http://localhost:8081/artifactory'
+    return 'http://5844c6e375f6:8081/artifactory'
 }
 
 
