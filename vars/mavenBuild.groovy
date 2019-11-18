@@ -18,7 +18,7 @@ def call(body) {
     print (SERVER_URL) 
     print (CREDENTIALS)
 
-
+    jenkinsKeyUsernameWithPassword()
 
     stage 'checkout'
     node {
