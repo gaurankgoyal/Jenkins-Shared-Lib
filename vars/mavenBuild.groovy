@@ -4,7 +4,7 @@ def call(body) {
     body.delegate = config
     body()
 	
-    mavenTool = "maven"
+    mavenTool = "M3"
     pomFile = config.get("pomFile", "pom.xml")
     commonFun.setJobProperties(env.NUM_BUILDS_KEPT, "H/10 * * * *")
     SERVER_URL = commonFun.artifactoryServerUrl()
