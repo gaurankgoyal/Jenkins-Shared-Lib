@@ -28,6 +28,8 @@ def call(body) {
         docker.image(config.environment).inside {
         	sh config.mainScript
         }
+	rtMaven.resolver server: artifactoryServer, releaseRepo: 'global-maven', snapshotRepo: 'global-maven'
+	rtMaven.deployer server: artifactoryServer, releaseRepo: 'example-repo-local', snapshotRepo: 'snapshotRepo'
         stage 'UnitTest'
         sh config.postScript
     }
