@@ -37,7 +37,7 @@ def call(body) {
 		//pomVersion = readMavenPom().getVersion()
 		//println(pomVersion)
 	}
-        stage (Build) {
+        stage ('Build') {
 		rtMaven.run pom: 'pom.xml', goals: 'clean install', buildInfo: buildInfo
         	junit allowEmptyResults: true, testResults: '**/surefire-reports/*.xml'
     	}
