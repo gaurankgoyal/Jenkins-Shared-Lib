@@ -37,8 +37,12 @@ def call(body) {
 		//pomVersion = readMavenPom().getVersion()
 		//println(pomVersion)
 	}
-        stage 'Build'
+        stage (Build) {
 		rtMaven.run pom: 'pom.xml', goals: 'clean install', buildInfo: buildInfo
+	}
+	finally {
+        junit allowEmptyResults: true, testResults: '**/surefire-reports/*.xml'
+    	}
         stage 'UnitTest'
 	stage ('Publish build info') {
         artifactoryServer.publishBuildInfo buildInfo
