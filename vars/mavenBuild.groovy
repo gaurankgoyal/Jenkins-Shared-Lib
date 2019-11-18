@@ -6,7 +6,7 @@ def call(body) {
 	
     def mavenTool = "M3"
     def pomFile = config.get("pomFile", "pom.xml")
-    pomVersion = readMavenPom().getVersion()
+    //pomVersion = readMavenPom().getVersion()
     commonFun.setJobProperties(env.NUM_BUILDS_KEPT, "H/10 * * * *")
     def SERVER_URL = commonFun.artifactoryServerUrl()
     def secretId = 'art-secret-id'
@@ -17,7 +17,7 @@ def call(body) {
 
     stage 'checkout'
     node {
-	
+	pomVersion = readMavenPom().getVersion()
 	stage('Get Secret From Vault'){
 		withVault(configuration: [timeout: 60, vaultCredentialId: 'vault-token', vaultUrl: 'http://vault:8200'], vaultSecrets: [[path: 'secret/Artifactory', secretValues: [[envVar: 'artUsername', vaultKey: 'username'], [envVar: 'artPassword', vaultKey: 'password']]]])
 		{
