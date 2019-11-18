@@ -43,10 +43,11 @@ def call(body) {
     node {
 	stage('Get Secret From Vault'){
 	withVault(configuration: [timeout: 60, vaultCredentialId: 'vault-token', vaultUrl: 'http://e746f51dee0e:8200'], vaultSecrets: [[path: 'secret/testing', secretValues: [[envVar: 'test_one', vaultKey: 'value_one']]]])
-	print (test_one)
-	commonFun.addCredential()
+		{
+		print (test_one)
+		commonFun.addCredential()
+		}
 	}
-	
 	stage('Pull Source Code') {
         	checkout scm
 
