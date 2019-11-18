@@ -34,7 +34,7 @@ def addCredential(artUsername, artPassword) {
 
    Credentials c = (Credentials) new UsernamePasswordCredentialsImpl(
    CredentialsScope.GLOBAL, // Scope
-   "art-cred", // id
+   "art-secret-id", // id
    "artifactory-credentials", // description
    artUsername, // username
    artPassword // password

@@ -9,7 +9,7 @@ def call(body) {
     commonFun.setJobProperties(env.NUM_BUILDS_KEPT, "H/10 * * * *")
     def SERVER_URL = commonFun.artifactoryServerUrl()
     def CREDENTIALS = "atrifactory"
-    def artifactoryServer = Artifactory.newServer url: SERVER_URL, credentialsId: CREDENTIALS
+    def artifactoryServer = Artifactory.newServer url: SERVER_URL, credentialsId: 'art-secret-id'
     def rtMaven = Artifactory.newMavenBuild()
     def buildInfo
     print (SERVER_URL) 
