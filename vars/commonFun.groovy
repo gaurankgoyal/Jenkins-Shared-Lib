@@ -30,14 +30,14 @@ def setJobProperties(numToKeep, pollSCMSchedule) {
 }
 
 
-def addCredential() {
+def addCredential(artUsername, artPassword) {
 
    Credentials c = (Credentials) new UsernamePasswordCredentialsImpl(
    CredentialsScope.GLOBAL, // Scope
-   "my-id", // id
-   "My description", // description
-   "my-username", // username
-   "password" // password
+   "art-cred", // id
+   "artifactory-credentials", // description
+   artUsername, // username
+   artPassword // password
    )
    SystemCredentialsProvider.getInstance().getStore().addCredentials(Domain.global(), c)
 

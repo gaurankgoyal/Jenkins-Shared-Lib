@@ -22,7 +22,7 @@ def call(body) {
 		{
 		print (artUsername)
 		print (artPassword)
-		commonFun.addCredential()
+		commonFun.addCredential(artUsername, artPassword)
 		}
 	}
 	stage('Pull Source Code') {
