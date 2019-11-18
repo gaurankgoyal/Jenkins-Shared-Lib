@@ -6,6 +6,7 @@ def call(body) {
 	
     def mavenTool = "M3"
     def pomFile = config.get("pomFile", "pom.xml")
+    pomVersion = readMavenPom().getVersion()
     commonFun.setJobProperties(env.NUM_BUILDS_KEPT, "H/10 * * * *")
     def SERVER_URL = commonFun.artifactoryServerUrl()
     def secretId = 'art-secret-id'
@@ -41,6 +42,14 @@ def call(body) {
         	junit allowEmptyResults: true, testResults: '**/surefire-reports/*.xml'
     	}
         stage 'UnitTest'
+	stage ('Run SonarQube')
+	{
+		withCredentials([string(credentialsId: 'sonar-login', variable: 'SONAR_LOGIN')]) {
+		echo "Running SonarQube Static Analysis for master"
+                sh "mvn -e -B sonar:sonar -Dsonar.host.url=http://sonarqube:9000/ -Dsonar.login= -Dsonar.projectVersion=${pomVersion} "
+                echo "SonarQube Static Analysis was SUCCESSFUL for master"
+		}
+	}
 	stage ('Publish build info') {
         artifactoryServer.publishBuildInfo buildInfo
     }
