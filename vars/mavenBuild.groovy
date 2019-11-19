@@ -14,24 +14,17 @@ def call(body) {
     def artifactoryServer = Artifactory.newServer url: SERVER_URL, credentialsId: secretId
     def rtMaven = Artifactory.newMavenBuild()
     def buildInfo
-    print (config.artifactoryServerUrl)
-    print (config.pollingInterval)
-    print (config.vaultUrl)
-    print (config.vaultArtifactoryPath)
-    print (config.vaultArtifactoryUsernameKey)
-    print (config.vaultArtifcatortyPasswordKey)
-    print (config.vaultSonarQubePath)
-    print (config.vauktSonarQubeTokenKey)
-    stage 'checkout'
+    
+
     node {
 	pomVersion = readMavenPom().getVersion()
 	stage('Get Secret From Vault'){
-		withVault(configuration: [timeout: 60, vaultCredentialId: 'vault-token', vaultUrl: config.vaultUrl], vaultSecrets: [[path: 'secret/Artifactory', secretValues: [[envVar: 'artUsername', vaultKey: 'username'], [envVar: 'artPassword', vaultKey: 'password']]]])
+		withVault(configuration: [timeout: 60, vaultCredentialId: 'vault-token', vaultUrl: config.vaultUrl], vaultSecrets: [[path: config.vaultArtifactoryPath, secretValues: [[envVar: 'artUsername', vaultKey: config.vaultArtifactoryUsernameKey], [envVar: 'artPassword', vaultKey: config.vaultArtifcatortyPasswordKey]]]])
 		{
 		def description = 'Jfrog-Credentials'
 		commonFun.addCredential(artUsername, artPassword, secretId, description)
 		}
-		withVault(configuration: [timeout: 60, vaultCredentialId: 'vault-token', vaultUrl: config.vaultUrl], vaultSecrets: [[path: 'secret/SonarQube', secretValues: [[envVar: 'sonartoken', vaultKey: 'token']]]])
+		withVault(configuration: [timeout: 60, vaultCredentialId: 'vault-token', vaultUrl: config.vaultUrl], vaultSecrets: [[path: config.vaultSonarQubePath, secretValues: [[envVar: 'sonartoken', vaultKey: config.vauktSonarQubeTokenKey]]]])
 		{
 		def sonarDescription = 'Sonar-Credentials'
 		commonFun.addSecretText(sonartoken, sonarDescription, sonarSecretId)
