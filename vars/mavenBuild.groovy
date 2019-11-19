@@ -18,6 +18,7 @@ def call(body) {
 
     node {
 	pomVersion = readMavenPom().getVersion()
+	addMaven.addMaven()
 	stage('Get Secret From Vault'){
 		withVault(configuration: [timeout: 60, vaultCredentialId: 'vault-token', vaultUrl: config.vaultUrl], vaultSecrets: [[path: config.vaultArtifactoryPath, secretValues: [[envVar: 'artUsername', vaultKey: config.vaultArtifactoryUsernameKey], [envVar: 'artPassword', vaultKey: config.vaultArtifcatortyPasswordKey]]]])
 		{
