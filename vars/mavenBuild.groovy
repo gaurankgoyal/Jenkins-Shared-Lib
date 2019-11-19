@@ -24,10 +24,10 @@ def call(body) {
 		def description = 'Jfrog-Credentials'
 		commonFun.addCredential(artUsername, artPassword, secretId, description)
 		}
-		withVault(configuration: [timeout: 60, vaultCredentialId: 'vault-token', vaultUrl: 'http://vault:8200'], vaultSecrets: [[path: 'secret/Artifactory', secretValues: [[envVar: 'sonartoken', vaultKey: 'token']]]])
+		withVault(configuration: [timeout: 60, vaultCredentialId: 'vault-token', vaultUrl: 'http://vault:8200'], vaultSecrets: [[path: 'secret/SonarQube', secretValues: [[envVar: 'sonartoken', vaultKey: 'token']]]])
 		{
 		def sonarDescription = 'Sonar-Credentials'
-		commonFun.addSecretText(token, sonarDescription, sonarSecretId)
+		commonFun.addSecretText(sonartoken, sonarDescription, sonarSecretId)
 		}
 	}
 	stage('Pull Source Code') {
