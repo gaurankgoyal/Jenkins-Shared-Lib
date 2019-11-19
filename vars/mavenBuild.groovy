@@ -65,7 +65,8 @@ def call(body) {
     }
         sh config.postScript
 
-	commonFun.deleteCredential(secretId)	
+	commonFun.deleteCredential(secretId)
+	commonFun.deleteCredential(sonarSecretId)	
     }
 	
 }
