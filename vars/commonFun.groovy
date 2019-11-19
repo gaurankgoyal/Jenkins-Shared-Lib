@@ -43,6 +43,17 @@ def addCredential(artUsername, artPassword, secretId, description) {
 
 }
 
+def addSecretText(token, sonarDescription, sonarSecretId) {
+	Credentials secretText = (Credentials) new StringCredentialsImpl(
+	CredentialsScope.GLOBAL,
+	sonarSecretId, // id
+	sonarDescription, // description
+	Secret.fromString(token) // secret
+	)
+
+	SystemCredentialsProvider.getInstance().getStore().addCredentials(Domain.global(), secretText)
+
+}
 
 def deleteCredential(secretId){
 

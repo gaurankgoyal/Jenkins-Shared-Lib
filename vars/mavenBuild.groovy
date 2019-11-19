@@ -24,6 +24,11 @@ def call(body) {
 		def description = 'Jfrog-Credentials'
 		commonFun.addCredential(artUsername, artPassword, secretId, description)
 		}
+		withVault(configuration: [timeout: 60, vaultCredentialId: 'vault-token', vaultUrl: 'http://vault:8200'], vaultSecrets: [[path: 'secret/Artifactory', secretValues: [[envVar: 'sonartoken', vaultKey: 'token']]]])
+		{
+		def sonarDescription = 'Sonar-Credentials'
+		commonFun.addSecretText(token, sonarDescription, sonarSecretId)
+		}
 	}
 	stage('Pull Source Code') {
         	checkout scm
@@ -47,15 +52,11 @@ def call(body) {
 	stage ('Run SonarQube')
 	{
 		withMaven(maven: 'M3') {
-		//withSonarQubeEnv('sonar'){
-		//sh 'mvn clean package sonar:sonar'
-		//}
-		//}
-		withCredentials([string(credentialsId: 'sonar-login', variable: 'SONAR_LOGIN')]) {
-		echo "Running SonarQube Static Analysis for master"
-                sh "mvn clean package sonar:sonar -Dsonar.host.url=http://sonarqube:9000/ -Dsonar.login=${env.SONAR_LOGIN} -Dsonar.projectVersion=${pomVersion} "
-		echo "SonarQube Static Analysis was SUCCESSFUL for master"
-		}
+			withCredentials([string(credentialsId: 'sonar-login', variable: 'SONAR_LOGIN')]) {
+				echo "Running SonarQube Static Analysis for master"
+                		sh "mvn clean package sonar:sonar -Dsonar.host.url=http://sonarqube:9000/ -Dsonar.login=${env.SONAR_LOGIN} -Dsonar.projectVersion=${pomVersion} "
+				echo "SonarQube Static Analysis was SUCCESSFUL for master"
+			}
 		}
 	}
 	stage ('Publish build info') {
