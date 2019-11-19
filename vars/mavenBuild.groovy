@@ -15,7 +15,15 @@ def call(body) {
     def rtMaven = Artifactory.newMavenBuild()
     def buildInfo
     print (SERVER_URL) 
-
+    print (config.mavenTool)
+    print (config.artifactoryServerUrl)
+    print (config.pollingInterval)
+    print (config.vaultUrl)
+    print (config.vaultArtifactoryPath)
+    print (config.vaultArtifactoryUsernameKey)
+    print (config.vaultArtifcatortyPasswordKey)
+    print (config.vaultSonarQubePath)
+    print (config.vauktSonarQubeTokenKey)
     stage 'checkout'
     node {
 	pomVersion = readMavenPom().getVersion()
