@@ -3,7 +3,8 @@ import com.cloudbees.plugins.credentials.domains.Domain
 import com.cloudbees.plugins.credentials.impl.*
 import hudson.util.Secret
 import jenkins.model.Jenkins
-
+import org.jenkinsci.plugins.plaincredentials.*
+import org.jenkinsci.plugins.plaincredentials.impl.*
 
 
 String artifactoryServerUrl() {
