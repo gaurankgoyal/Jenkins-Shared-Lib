@@ -10,6 +10,7 @@ def call(body) {
     commonFun.setJobProperties(env.NUM_BUILDS_KEPT, "H/10 * * * *")
     def SERVER_URL = commonFun.artifactoryServerUrl()
     def secretId = 'art-secret-id'
+    def sonarSecretId = 'sonar-secret-id'
     def artifactoryServer = Artifactory.newServer url: SERVER_URL, credentialsId: secretId
     def rtMaven = Artifactory.newMavenBuild()
     def buildInfo
