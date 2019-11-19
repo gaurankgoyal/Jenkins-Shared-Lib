@@ -44,8 +44,10 @@ def call(body) {
         stage 'UnitTest'
 	stage ('Run SonarQube')
 	{
+		withMaven(maven: 'M3') {
 		withSonarQubeEnv('sonar'){
 		sh 'mvn clean package sonar:sonar'
+		}
 		}
 		//withCredentials([string(credentialsId: 'sonar-login', variable: 'SONAR_LOGIN')]) {
 		//echo "Running SonarQube Static Analysis for master"
