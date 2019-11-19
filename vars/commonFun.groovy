@@ -7,11 +7,6 @@ import org.jenkinsci.plugins.plaincredentials.*
 import org.jenkinsci.plugins.plaincredentials.impl.*
 
 
-String artifactoryServerUrl() {
-    return 'http://artifactory:8081/artifactory'
-}
-
-
 def setJobProperties(numToKeep, pollSCMSchedule) {
     def jobProperties = []
     jobProperties.add(disableConcurrentBuilds())
