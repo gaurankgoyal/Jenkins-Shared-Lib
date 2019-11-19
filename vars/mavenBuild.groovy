@@ -69,7 +69,6 @@ def call(body) {
 	stage ('Publish build info') {
         artifactoryServer.publishBuildInfo buildInfo
     }
-        sh config.postScript
 
 	commonFun.deleteCredential(secretId)
 	commonFun.deleteCredential(sonarSecretId)	
