@@ -39,9 +39,11 @@ def call(body) {
 	}
         stage ('Build') {
 		rtMaven.run pom: 'pom.xml', goals: 'clean install', buildInfo: buildInfo
-        	junit allowEmptyResults: true, testResults: '**/surefire-reports/*.xml'
+        	//junit allowEmptyResults: true, testResults: '**/surefire-reports/*.xml'
     	}
-        stage 'UnitTest'
+        stage ('UnitTest') {
+		junit allowEmptyResults: true, testResults: '**/surefire-reports/*.xml'
+	}
 	stage ('Run SonarQube')
 	{
 		withMaven(maven: 'M3') {
