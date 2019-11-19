@@ -4,18 +4,16 @@ def call(body) {
     body.delegate = config
     body()
 	
-    def mavenTool = "M3"
+    def mavenTool = config.mavenTool
     def pomFile = config.get("pomFile", "pom.xml")
     //pomVersion = readMavenPom().getVersion()
-    commonFun.setJobProperties(env.NUM_BUILDS_KEPT, "H/10 * * * *")
-    def SERVER_URL = commonFun.artifactoryServerUrl()
+    commonFun.setJobProperties(env.NUM_BUILDS_KEPT, config.pollingInterval)
+    def SERVER_URL = config.artifactoryServerUrl
     def secretId = 'art-secret-id'
     def sonarSecretId = 'sonar-secret-id'
     def artifactoryServer = Artifactory.newServer url: SERVER_URL, credentialsId: secretId
     def rtMaven = Artifactory.newMavenBuild()
     def buildInfo
-    print (SERVER_URL) 
-    print (config.mavenTool)
     print (config.artifactoryServerUrl)
     print (config.pollingInterval)
     print (config.vaultUrl)
@@ -28,12 +26,12 @@ def call(body) {
     node {
 	pomVersion = readMavenPom().getVersion()
 	stage('Get Secret From Vault'){
-		withVault(configuration: [timeout: 60, vaultCredentialId: 'vault-token', vaultUrl: 'http://vault:8200'], vaultSecrets: [[path: 'secret/Artifactory', secretValues: [[envVar: 'artUsername', vaultKey: 'username'], [envVar: 'artPassword', vaultKey: 'password']]]])
+		withVault(configuration: [timeout: 60, vaultCredentialId: 'vault-token', vaultUrl: config.vaultUrl], vaultSecrets: [[path: 'secret/Artifactory', secretValues: [[envVar: 'artUsername', vaultKey: 'username'], [envVar: 'artPassword', vaultKey: 'password']]]])
 		{
 		def description = 'Jfrog-Credentials'
 		commonFun.addCredential(artUsername, artPassword, secretId, description)
 		}
-		withVault(configuration: [timeout: 60, vaultCredentialId: 'vault-token', vaultUrl: 'http://vault:8200'], vaultSecrets: [[path: 'secret/SonarQube', secretValues: [[envVar: 'sonartoken', vaultKey: 'token']]]])
+		withVault(configuration: [timeout: 60, vaultCredentialId: 'vault-token', vaultUrl: config.vaultUrl], vaultSecrets: [[path: 'secret/SonarQube', secretValues: [[envVar: 'sonartoken', vaultKey: 'token']]]])
 		{
 		def sonarDescription = 'Sonar-Credentials'
 		commonFun.addSecretText(sonartoken, sonarDescription, sonarSecretId)
