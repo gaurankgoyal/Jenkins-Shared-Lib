@@ -44,11 +44,14 @@ def call(body) {
         stage 'UnitTest'
 	stage ('Run SonarQube')
 	{
-		withCredentials([string(credentialsId: 'sonar-login', variable: 'SONAR_LOGIN')]) {
-		echo "Running SonarQube Static Analysis for master"
-                sh "mvn -e -B sonar:sonar -Dsonar.host.url=http://sonarqube:9000/ -Dsonar.login= -Dsonar.projectVersion=${pomVersion} "
-		echo "SonarQube Static Analysis was SUCCESSFUL for master"
+		withSonarQubeEnv('sonar'){
+		sh 'mvn clean package sonar:sonar'
 		}
+		//withCredentials([string(credentialsId: 'sonar-login', variable: 'SONAR_LOGIN')]) {
+		//echo "Running SonarQube Static Analysis for master"
+                //sh "mvn -e -B sonar:sonar -Dsonar.host.url=http://sonarqube:9000/ -Dsonar.login= -Dsonar.projectVersion=${pomVersion} "
+		//echo "SonarQube Static Analysis was SUCCESSFUL for master"
+		//}
 	}
 	stage ('Publish build info') {
         artifactoryServer.publishBuildInfo buildInfo
