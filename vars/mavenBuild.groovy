@@ -6,6 +6,7 @@ def call(body) {
 	
     def mavenTool = config.mavenTool
     def pomFile = config.get("pomFile", "pom.xml")
+	print (pomFile)
     //pomVersion = readMavenPom().getVersion()
     commonFun.setJobProperties(env.NUM_BUILDS_KEPT, config.pollingInterval)
     def SERVER_URL = config.artifactoryServerUrl
