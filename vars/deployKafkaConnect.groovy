@@ -12,10 +12,16 @@ def call(body) {
             checkout scm
         }
         jsonFiles = findFiles glob: "${configFolder}/*.json"
-        changedFiles = sh(script: "git diff --name-only HEAD HEAD~1", returnStdout: true).trim()
-        properties = readFile jsonfile.path
-        print(properties)
-        properties.replace('${env}', env.environment)
+        for (jsonfile in jsonFiles) {
+                index = index + 1
+                config = readJSON file: jsonfile.path
+                connector = config["name"]
+                changedFiles = sh(script: "git diff --name-only HEAD HEAD~1", returnStdout: true).trim()
+                properties = readFile jsonfile.path
+                print(properties)
+                properties.replace('${env}', env.environment)
+            
+            }
         }
 }
 
