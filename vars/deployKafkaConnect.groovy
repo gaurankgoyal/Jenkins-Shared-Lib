@@ -12,6 +12,7 @@ def call(body) {
             checkout scm
         }
         jsonFiles = findFiles glob: "${configFolder}/*.json"
+        index = 0
         for (jsonfile in jsonFiles) {
                 index = index + 1
                 config = readJSON file: jsonfile.path
