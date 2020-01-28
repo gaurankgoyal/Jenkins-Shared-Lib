@@ -7,7 +7,7 @@ def call(body) {
     
     configFolder = config.get("configFolder")
     
-    node("tools01") {
+    node {
         stage("Checkout") {
             checkout scm
         }
