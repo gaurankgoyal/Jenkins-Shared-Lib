@@ -16,6 +16,7 @@ def call(body) {
         properties = readFile jsonfile.path
         print(properties)
         properties.replace('${env}', env.environment)
+        }
 }
 
 
