@@ -20,7 +20,7 @@ def call(body) {
                 changedFiles = sh(script: "git diff --name-only HEAD HEAD~1", returnStdout: true).trim()
                 properties = readFile jsonfile.path
                 print(properties)
-                properties = properties.replace('${env}', env.environment)
+                properties = properties.replace('${env}', env.environment).replace('${topicPrefix}', env.topicPrefix)
                 print(properties)
             }
         }
